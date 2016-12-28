@@ -1,0 +1,9 @@
+<table>
+  <tr *ngFor="let row of y; let i = index">
+    <td class="{{robot.x === j && robot.y === i ? robot.direction : ''}}" 
+      *ngFor="let cell of x; let j = index" 
+      [class.robot]="robot.x === j && robot.y === i">
+      <span *ngIf="robot.x === j && robot.y === i">:)</span>
+    </td>
+  </tr>
+</table>

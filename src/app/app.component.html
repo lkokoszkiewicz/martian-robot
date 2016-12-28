@@ -1,5 +1,15 @@
-<h1>
-  {{title}}
-</h1>
+<md-toolbar color="primary">
+  <span>Martian Robots</span>
 
-<app-grid></app-grid>
+  <!-- This fills the remaining space of the current row -->
+  <span class="fill-remaining-space"></span>
+</md-toolbar>
+
+<form id="inputForm" method="get" action="http://onet.pl" (submit)="onSubmit($event)">
+  <md-input-container class="full-width">
+    <textarea md-input placeholder="Input"></textarea>
+  </md-input-container>
+</form>
+<button type="submit" form="inputForm" value="Go!" color="warn" md-fab><md-icon>check</md-icon></button>
+
+<app-grid [dimentions]="dim"></app-grid>

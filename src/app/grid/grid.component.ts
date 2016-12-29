@@ -1,16 +1,17 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { State } from '../types/state.type';
+import { Dimentions } from '../types/dimentions.type';
 
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.scss']
 })
-export class GridComponent implements OnInit {
-  @Input() dimentions: Number[] = [10, 10];
-  public x: Object;
-  public y: Object;
-  public robot: State = {
+export class GridComponent implements OnInit, OnChanges {
+  @Input() dimentions: Dimentions;
+  private x: Object;
+  private y: Object;
+  private robot: State = {
     x: 3,
     y: 4,
     direction: 'W'
@@ -18,11 +19,13 @@ export class GridComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    this.x = new Array(this.dimentions[0]);
-    this.y = new Array(this.dimentions[1]);
-
-    console.log(this.x);
+  ngOnChanges(changes: any) {
+    if (this.dimentions !== undefined) {
+      this.x = new Array(this.dimentions.y);
+      this.y = new Array(this.dimentions.x);
+    }
   }
+
+  ngOnInit() { }
 
 }

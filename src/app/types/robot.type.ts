@@ -3,4 +3,5 @@ export class Robot {
   y: Number;
   direction: String;
   commands: String[];
+  lost: boolean;
 }

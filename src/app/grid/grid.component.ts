@@ -9,9 +9,9 @@ import { Dimentions } from '../types/dimentions.type';
 })
 export class GridComponent implements OnInit, OnChanges {
   @Input() dimentions: Dimentions;
-  private x: Object;
-  private y: Object;
-  private robot: State = {
+  public x: Object;
+  public y: Object;
+  public robot: State = {
     x: 3,
     y: 4,
     direction: 'W'
@@ -21,8 +21,8 @@ export class GridComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: any) {
     if (this.dimentions !== undefined) {
-      this.x = new Array(this.dimentions.y);
-      this.y = new Array(this.dimentions.x);
+      this.x = new Array(this.dimentions.x.valueOf() + 1);
+      this.y = new Array(this.dimentions.y.valueOf() + 1);
     }
   }
 

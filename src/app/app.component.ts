@@ -10,9 +10,10 @@ import { Robot } from './types/robot.type';
 })
 export class AppComponent {
   private title: String = 'Martian Robots';
-  private dim: Dimentions;
+  public dim: Dimentions;
   private robots: Robot[];
   private input: String[];
+  private lostRobots: Robot[] = [];
 
   onSubmit(values) {
     this.input = values.input.split('\n');
@@ -21,7 +22,7 @@ export class AppComponent {
     this.setRobots();
 
     for (let i = 0; i < this.robots.length; i++) {
-      this.createDirectionSequance(this.robots[i]);
+      this.runRobotCommands(this.robots[i]);
     }
   }
 
@@ -51,7 +52,8 @@ export class AppComponent {
           x: parseInt(position[0], 10),
           y: parseInt(position[1], 10),
           direction: position[2],
-          commands: []
+          commands: [],
+          lost: false
         };
 
         searchState = 'load-commands';
@@ -66,7 +68,37 @@ export class AppComponent {
     this.robots = robots;
   }
 
-  createDirectionSequance(robot) {
+  isOutOfBoundries(coords) {
+    let x = false, y = false;
+    if (coords.hasOwnProperty('x')) {
+      x = (coords.x < 0) || (coords.x > this.dim.x);
+    }
+
+    if (coords.hasOwnProperty('y')) {
+      y = (coords.y < 0) || (coords.y > this.dim.y);
+    }
+
+    return x || y;
+  }
+
+  moveRobot(robot, move) {
+    let status = true;
+    if (!this.lostRobots.find((lostRobot) => {
+      return robot.x === lostRobot.x
+        && robot.y === lostRobot.y
+        && robot.direction === lostRobot.direction;
+    })) {
+      if (!this.isOutOfBoundries(move)) {
+        Object.assign(robot, move);
+      } else {
+        status = false;
+      }
+    }
+
+    return status;
+  }
+
+  runRobotCommands(robot) {
     let directionMap = {
       N: {R: 'E', L: 'W'},
       E: {R: 'S', L: 'N'},
@@ -74,17 +106,22 @@ export class AppComponent {
       W: {R: 'N', L: 'S'}
     };
     let evaluateMap = {
-      S: () => { robot.y -= 1; },
-      W: () => { robot.x -= 1; },
-      N: () => { robot.y += 1; },
-      E: () => { robot.x += 1; }
+      S: () => { return { y: robot.y - 1 }; },
+      W: () => { return { x: robot.x - 1 }; },
+      N: () => { return { y: robot.y + 1 }; },
+      E: () => { return { x: robot.x + 1 }; }
     };
 
     for (let i = 0; i < robot.commands.length; i++) {
-      if (robot.commands[i] !== 'F') {
-        robot.direction = directionMap[robot.direction][robot.commands[i]];
+      if (robot.commands[i] === 'F') {
+        let move = evaluateMap[robot.direction]();
+        if (!this.moveRobot(robot, move)) {
+          robot.lost = true;
+          this.lostRobots.push(robot);
+          break;
+        }
       } else {
-        evaluateMap[robot.direction]();
+        robot.direction = directionMap[robot.direction][robot.commands[i]];
       }
     }
 

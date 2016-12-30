@@ -3,9 +3,9 @@
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.24.
 
 ## Prerequisites
-Install Node.js
-Install angular CLI globally `npm install -g angular-cli`
-Run `npm install` to download all dependencies.
+* Install Node.js
+* Install angular CLI globally `npm install -g angular-cli`
+* Run `npm install` to download all dependencies.
 
 ## Development server - run this for quick demo
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

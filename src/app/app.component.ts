@@ -11,15 +11,17 @@ import { Robot } from './types/robot.type';
 export class AppComponent {
   private title: String = 'Martian Robots';
   public dim: Dimentions;
-  private robots: Robot[];
+  public robots: Robot[];
   private input: String[];
   private lostRobots: Robot[] = [];
 
   onSubmit(values) {
     this.input = values.input.split('\n');
 
-    this.setWorld();
+    this.lostRobots = [];
+
     this.setRobots();
+    this.setWorld();
 
     for (let i = 0; i < this.robots.length; i++) {
       this.runRobotCommands(this.robots[i]);

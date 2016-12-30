@@ -60,6 +60,34 @@ td {
         border-bottom: 10px transparent solid;
       }
     }
+
+    &.lost {
+      background-color: #D50000;
+
+      &.N {
+        &::before {
+          border-bottom: 10px #D50000 solid;
+        }
+      }
+
+      &.S {
+        &::before {
+          border-top: 10px #D50000 solid;
+        }
+      }
+
+      &.E {
+        &::before {
+          border-left: 10px #D50000 solid;
+        }
+      }
+
+      &.W {
+        &::before {
+          border-right: 10px #D50000 solid;
+        }
+      }
+    }
   }
 
   span {

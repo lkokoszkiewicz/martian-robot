@@ -12,9 +12,14 @@
 </form>
 <button type="submit" form="inputForm" value="Go!" color="warn" md-fab><md-icon>check</md-icon></button>
 
+<h3 *ngIf="output.length > 0">Output</h3>
+<ul class="output" *ngIf="output.length > 0">
+  <li *ngFor="let line of output">{{line}}</li>
+</ul>
+
 <app-grid [dimentions]="dim" [robots]="robots"></app-grid>
 
-<br>
+<h3>Example Input</h3>
 5 3<br>
 1 1 E<br>
 RFRFRFRF<br>
@@ -24,3 +29,8 @@ FRRFLLFFRRFLL<br>
 <br>
 0 3 W<br>
 LLFFFLFLFL<br>
+
+<h3>Example Output</h3>
+1 1 E<br>
+3 3 N LOST<br>
+2 3 S<br>

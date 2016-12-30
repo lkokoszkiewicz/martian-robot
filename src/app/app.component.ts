@@ -12,6 +12,7 @@ export class AppComponent {
   private title: String = 'Martian Robots';
   public dim: Dimentions;
   public robots: Robot[];
+  public output: String[] = [];
   private input: String[];
   private lostRobots: Robot[] = [];
 
@@ -26,6 +27,8 @@ export class AppComponent {
     for (let i = 0; i < this.robots.length; i++) {
       this.runRobotCommands(this.robots[i]);
     }
+
+    this.showOutput();
   }
 
   setWorld() {
@@ -126,7 +129,12 @@ export class AppComponent {
         robot.direction = directionMap[robot.direction][robot.commands[i]];
       }
     }
+  }
 
-    console.log(robot);
+  showOutput() {
+    this.output = [];
+    this.robots.forEach(robot => {
+      this.output.push(robot.x + ' ' + robot.y + ' ' + robot.direction + (robot.lost ? ' LOST' : ''));
+    });
   }
 }
